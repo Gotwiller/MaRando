@@ -1,0 +1,21 @@
+{
+  "name": "projet",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Projet réalisé dans le cadre de la L3 MIASHS pour la matière introduction aux technologies du web",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "init-db": "node scripts/init-db.js",
+    "init-db-randos": "node scripts/init-db-randos.js"
+  },
+  "keywords": [],
+  "author": "Louis BONNARD & Gautier MEYRIEUX",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7"
+  }
+}

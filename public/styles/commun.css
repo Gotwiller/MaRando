@@ -1,0 +1,41 @@
+*{
+  margin: 0; 
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", "sans-serif";
+
+}
+
+
+
+.header{
+
+   position: fixed;
+   top:0;
+   left:0;
+   width: 100%;
+   padding: 1.3rem 10%;
+   background: rgba(0,0,0,.1);
+   backdrop-filter: blur(50px);
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   z-index: 100;
+
+}
+
+.logo{
+   font-size: 2rem;
+   color: #fff;
+   text-decoration: none;
+   font-weight: 700;
+}
+
+.navbar a{
+   font-size: 1.15rem;
+   color: #fff;
+   text-decoration: none;
+   font-weight: 500;
+   margin-left: 2.5rem;
+
+}

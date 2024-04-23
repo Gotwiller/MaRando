@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contribuer</title>
+
+    <link rel="stylesheet" href="styles/commun.css">
+    <link rel="stylesheet" href="styles/contribuer.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="contribuer.js" type="module"></script>
+</head>
+
+<body>
+
+    <header class="header">
+          <label for="" class="logo">
+              <i<i class='bx bx-landscape'></i> 
+          </label>
+          <nav class="navbar">
+              <a href="/">Randonner</a>
+              <a href="contribuer.html" >Contribuer</a>
+              <a href="connexion.html">Connexion</a>
+          </nav>
+     </header>
+
+     <div class="wrapper">
+        <form id="login-form">
+            <h1>Login</h1>
+
+            <div class="input-box">
+
+                <input id="username" type="text" placeholder="Identifiant" required aria-labelledby="username-icon">
+                <i class='bx bxs-user'></i>
+            </div>
+
+            <div class="input-box">
+                <input id="password" type="password" placeholder="Mot de passe" required aria-labelledby="password-icon">
+                <i class='bx bxs-lock-alt' ></i>
+            </div>
+
+            <div class="remember-forgot">
+                <label ><input id="new-user" type="checkbox"> Nouvel Utilisateur</label>
+                <a href="#"> Mot de passe oublié ?</a>
+            </div>
+
+            <button type="submit" class="btn">Login</button>
+            <div id="error-message" class="error-message"></div>
+        </form>   
+     </div> 
+
+     <script src="connexion.js"></script>   
+
+</body>
