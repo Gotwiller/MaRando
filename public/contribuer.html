@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contribuer</title>
     <link rel="stylesheet" href="styles/commun.css">
+    <link rel="stylesheet" href="styles/connexion.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="styles/contribuer.css">
+    <script src="contribuer.js" type="module"></script>
 </head>
 <body>
     <header class="header">
@@ -17,7 +20,7 @@
             <a href="contribuer.html" >Contribuer</a>
             <a href="connexion.html">Connexion</a>
         </nav>
-   </header>
+    </header>
 
     <div class="wrapper">
         <form id="contribution-form" action="/submit" method="post" enctype="multipart/form-data">
@@ -28,7 +31,7 @@
             </div>
 
             <div class="input-box">
-                <textarea id="description" name="description" placeholder="Description de la randonnée" rows="5" required></textarea>
+                <textarea id="description" name="description" placeholder="Description de la randonnée" required></textarea>
             </div>
 
             <div class="input-box">
@@ -36,7 +39,7 @@
             </div>
 
             <div class="input-box">
-                <input type="text" id="depart" name="depart" placeholder="Point de départ" required>
+                <input type="text" id="depart" name="depart" placeholder="Point de départ en coordonnées GPS" required>
             </div>
 
             <div class="input-box">
