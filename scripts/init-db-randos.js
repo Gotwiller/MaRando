@@ -7,11 +7,12 @@ open({ filename: "database.sqlite", driver: sqlite3.Database })
         CREATE TABLE IF NOT EXISTS randonnees (
           nom TEXT PRIMARY KEY,
           description TEXT NOT NULL,
-          score INTEGER NOT NULL,
+          score INTEGER,
           adresse TEXT NOT NULL,
           photo TEXT
         );
       `);
+    
   })
   .then((statement) => statement.run())
   .catch((error) => {
