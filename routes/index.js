@@ -10,11 +10,7 @@ export function get(request, response) {
       <link rel="stylesheet" href="./styles/commun.css"/>
       <link rel="stylesheet" href="./styles/accueil.css"/>
 
-
-  
       <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  
-  
   
   </head>
   <body>

@@ -8,7 +8,8 @@
     "start": "node server.js",
     "dev": "node --watch server.js",
     "init-db": "node scripts/init-db.js",
-    "init-db-randos": "node scripts/init-db-randos.js"
+    "init-db-randos": "node scripts/init-db-randos.js",
+    "fill-db-randos": "node scripts/fill-db-randos.js"
   },
   "keywords": [],
   "author": "Louis BONNARD & Gautier MEYRIEUX",
