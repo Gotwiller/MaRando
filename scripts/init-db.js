@@ -1,62 +1,50 @@
 import sqlite3 from "sqlite3";
 import { open } from "sqlite";
 
-open({ filename: "database.sqlite", driver: sqlite3.Database })
-  .then((db) => {
-    return db.prepare(`
-       CREATE TABLE IF NOT EXISTS users (
-         username TEXT PRIMARY KEY,
-         password TEXT NOT NULL
-         
-       );
-     `);
-  })
-  .then((statement) => statement.run())
-  .catch((error) => {
-    console.error("Error creating database", error);
-    // Exit with non-zero exit code to indicate failure.
-    process.exit(1);
-  });
+async function initialiserBDD() {
+    try {
+        const db = await open({
+            filename: "database.sqlite",
+            driver: sqlite3.Database
+        });
 
-open({ filename: "database.sqlite", driver: sqlite3.Database })
-  .then((db) => {
-    return db.prepare(`
-        CREATE TABLE IF NOT EXISTS randonnees (
-          nom TEXT PRIMARY KEY,
-          description TEXT NOT NULL,
-          score INTEGER,
-          adresse TEXT NOT NULL,
-          photo TEXT
-        );
-      `);
-    
-  })
-  .then((statement) => statement.run())
-  .catch((error) => {
-    console.error("Error creating database", error);
-    // Exit with non-zero exit code to indicate failure.
-    process.exit(1);
-  });
+        await db.exec(`
+            CREATE TABLE IF NOT EXISTS users (
+                username TEXT PRIMARY KEY,
+                password TEXT NOT NULL
+            );
+        `);
 
-  open({ filename: "database.sqlite", driver: sqlite3.Database })
-  .then((db) => {
-    return db.prepare(`
-    INSERT INTO randonnees (nom, description, score, adresse, photo)
-    VALUES 
-        ('Chamechaude depuis le Col de Porte', 'Point culminant du massif de la Chartreuse, à 2082 mètres avec en prime, un passage avec un câble pour accéder à la plateforme du sommet. Magnifique panorama sur la Chartreuse, vue sur le Mont Blanc, le Mont Aiguille et le Vercors.', NULL, 'N 45.29067° / E 5.767096°', './public/styles/images/chamechaude.jpg'),
-        ('Mont Rachais depuis Grenoble en boucle', 'xxx', NULL, 'N 45.193545° / E 5.719999°', './public/styles/images/chamechaude.jpg'),
-        ('Dent de Crolles','xxx',NULL,'N 45.296582° / E 5.845023°','./public/styles/images/chamechaude.jpg'),
-        ('Lac Achard', 'xxx', NULL, 'N 45.193545° / E 5.719999°', './public/styles/images/chamechaude.jpg'),
-        ('Lac Blanc au départ de Pairis','xxx',NULL,'N 48.115866° / E 7.121023°','./public/styles/images/chamechaude.jpg'),
-        ('Lacs Robert depuis le Recoin','xxx',NULL,'N 45.12526° / E 5.87888°','./public/styles/images/chamechaude.jpg'),
-        ('Moucherotte','xxx',NULL,'N 45.160863° / E 5.618032°','./public/styles/images/chamechaude.jpg'),
-        ('Dent du loup','xxx',NULL,'N 45.193189° / E 5.619734°','./public/styles/images/chamechaude.jpg'),
-        ('Pic Saint-Michel','xxx',NULL,'N 45.087962° / E 5.641852°','./public/styles/images/chamechaude.jpg');
-`   );  
-  })
-  .then((statement) => statement.run())
-  .catch((error) => {
-    console.error("Error creating database", error);
-    // Exit with non-zero exit code to indicate failure.
-    process.exit(1);
-  });
+        await db.exec(`
+            CREATE TABLE IF NOT EXISTS randonnees (
+                nom TEXT PRIMARY KEY,
+                description TEXT NOT NULL,
+                score REAL NOT NULL,
+                adresse TEXT NOT NULL,
+                photo TEXT
+            );
+        `);
+
+        await db.exec(`
+            INSERT INTO randonnees (nom, description, score, adresse, photo)
+            VALUES 
+                ('Chamechaude depuis le Col de Porte', 'Point culminant du massif de la Chartreuse, à 2082 mètres avec en prime, un passage avec un câble pour accéder à la plateforme du sommet. Magnifique panorama sur la Chartreuse, vue sur le Mont Blanc, le Mont Aiguille et le Vercors.', 4, '50 Route du Charmant Som, 38700 Sarcenas', './public/styles/images/chamechaude.jpg'),
+                ('Mont Rachais depuis Grenoble en boucle', 'xxx', 3.8, '2 Place Aristide Briand, 38000 Grenoble', './public/styles/images/chamechaude.jpg'),
+                ('Dent de Crolles','xxx',4.5,'Route du Col du Coq, 38660 Plateau-des-Petites-Roches','./public/styles/images/chamechaude.jpg'),
+                ('Lac Achard', 'xxx', 4, '623 Route de la Croisette, 38410 Chamrousse', './public/styles/images/chamechaude.jpg'),
+                ('Lac Blanc au départ de Pairis','xxx',4.2,'312 Noirrupt, 68370 Orbey','./public/styles/images/chamechaude.jpg'),
+                ('Lacs Robert depuis le Recoin','xxx',4.6,'38 Place de Belledonne, 38410 Chamrousse','./public/styles/images/chamechaude.jpg'),
+                ('Moucherotte','xxx',4.4,'203 Impasse des Massues, 38250 Saint-Nizier-du-Moucherotte','./public/styles/images/chamechaude.jpg'),
+                ('Dent du loup','xxx',4,'1581 Route du Fournel, 38360 Engins, France','./public/styles/images/chamechaude.jpg'),
+                ('Pic Saint-Michel','xxx',4,'Sentier justin et via cordata de la bourgeoise, 38760 Varces-Allières-et-Risset, France','./public/styles/images/chamechaude.jpg');
+        `);
+
+        console.log("BDD initialisée");
+    } catch (error) {
+        console.error("Erreur d'initialisation de la BDD", error);
+        // Handle errors as per your application requirements
+    }
+}
+
+// Call the function to initialize the database
+initialiserBDD();

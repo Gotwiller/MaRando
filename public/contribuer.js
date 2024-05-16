@@ -1,18 +1,31 @@
-// Sélectionnez le formulaire
-const form = document.getElementById('contribution-form');
+    document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contribution-form');
 
-// Ajoutez un gestionnaire d'événements pour soumettre le formulaire
-form.addEventListener('submit', function(event) {
-    event.preventDefault(); 
-    
-    const nom = document.getElementById('nom').value;
-    const description = document.getElementById('description').value;
-    const score = document.getElementById('note').value;
-    const adresse = document.getElementById('depart').value;
-    const photo = document.getElementById('image').files[0]; // Pour récupérer le fichier d'image
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); 
+            
+        const nom = document.getElementById('nom').value;
+        const description = document.getElementById('description').value;
+        const score = document.getElementById('note').value;
+        const adresse = document.getElementById('adresse').value;
+        const photo = document.getElementById('image').files[0]; 
+        
+        requete = 'INSERT INTO randonnees VALUES ('+nom+ +','+description+','+score+','+adresse+','+photo+')';
 
-    requete = 'INSERT INTO randonnees VALUES ('+nom+ +','+description+','+score+','+adresse+','+photo+')';
-    
-    console.log(requete);
+         // Route pour gérer l'ajout de nouvelles randonnées
+         app.post('/ajouter-randonnee', async (req, res) => {
+            const { nom, description, score, adresse, photo } = req.body;
 
+            // Insérer les données de la randonnée dans la base de données des randonnées
+            const randoDB = new sqlite3.Database('./database.sqlite');
+            randoDB.run(requete, function(err) {
+                if (err) {
+                    return console.error('Erreur lors de l\'insertion des données de randonnée:', err.message);
+                }
+                console.log('Randonnée ajoutée avec succès !');
+            });
+        });
+        
+        window.location.href = "randonnee.html";    
+    });
 });
