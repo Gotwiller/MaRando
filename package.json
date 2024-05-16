@@ -13,7 +13,9 @@
   "author": "Louis BONNARD & Gautier MEYRIEUX",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "express": "^4.19.2",
+    "express-session": "^1.18.0",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7"
   }

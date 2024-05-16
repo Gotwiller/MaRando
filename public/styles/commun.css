@@ -44,3 +44,10 @@
    margin-left: 2.5rem;
 
 }
+
+.user-identifier {
+   color: white;
+   font-size: 1.2em;
+   margin-left: auto; /* pousse l'identifiant tout à droite */
+   padding-left: 20px; /* espace entre le dernier lien et l'identifiant */
+ }

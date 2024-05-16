@@ -37,3 +37,48 @@ body{
 }
 
 
+/* Style de la liste des randonnées */
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  /* Style pour chaque randonnée */
+  .randonnee {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px;
+    width: 80%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+  }
+  
+  .randonnee:hover {
+    transform: scale(1.02);
+  }
+  
+  /* Style pour le lien vers les détails de la randonnée */
+  .randonnee a {
+    color: #333;
+    text-decoration: none;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .randonnee a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Style pour l'adresse de la randonnée */
+  .randonnee p {
+    color: #666;
+    font-size: 1em;
+    margin: 5px 0;
+  }
+  

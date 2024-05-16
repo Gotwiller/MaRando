@@ -1,38 +1,34 @@
-import { hashPassword } from "../lib/hash-password.js";
+import bcrypt from 'bcrypt';
 
-function isNonEmptyString(value) {
-  return typeof value === "string" && value !== "";
-}
+export async function post(request, response) {
+  const { username, password, newUser } = request.body;
+  const db = request.context.database;
 
-export function post(request, response) {
-  const { username, password, name } = request.body;
-  if (
-    !isNonEmptyString(username) ||
-    !isNonEmptyString(password) 
-  ) {
-    response.status(400).end();
-    return;
-  }
-  // Promise.all allows us to hash the password and prepare the statement
-  // in parallel, and to get both results in a single then callback.
-  Promise.all([
-    request.context.database.prepare(
-      "INSERT INTO users (username, password) VALUES (?, ?)",
-    ),
-    hashPassword(password),
-  ])
-    .then(([statement, hashedPassword]) => {
-      return statement.run(username, hashedPassword, name);
-    })
-    .then(() => {
-      response.end();
-    })
-    .catch((error) => {
-      if (error.message.includes("UNIQUE constraint failed")) {
-        response.status(409).end();
+  try {
+    const user = await db.get('SELECT * FROM users WHERE username = ?', username);
+
+    if (newUser) {
+      if (user) {
+        return response.status(409).json({ message: 'Identifiant existe déjà' });
       } else {
-        console.error("Error signing up", error);
-        response.status(500).end();
+        const hashedPassword = bcrypt.hashSync(password, 10);
+        await db.run('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword]);
+        request.session.user = { username }; // Stocker l'utilisateur dans la session
+        return response.status(201).json({ message: 'Inscription réussie' });
       }
-    });
+    } else {
+      if (user) {
+        if (bcrypt.compareSync(password, user.password)) {
+          request.session.user = { username }; // Stocker l'utilisateur dans la session
+          return response.status(200).json({ message: 'Connexion réussie' });
+        } else {
+          return response.status(401).json({ message: 'Mot de passe incorrect' });
+        }
+      } else {
+        return response.status(404).json({ message: "Identifiant n'existe pas" });
+      }
+    }
+  } catch (error) {
+    return response.status(500).json({ message: 'Erreur serveur' });
+  }
 }
