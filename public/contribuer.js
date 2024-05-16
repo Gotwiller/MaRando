@@ -12,11 +12,7 @@
         
         requete = 'INSERT INTO randonnees VALUES ('+nom+ +','+description+','+score+','+adresse+','+photo+')';
 
-         // Route pour gérer l'ajout de nouvelles randonnées
          app.post('/ajouter-randonnee', async (req, res) => {
-            const { nom, description, score, adresse, photo } = req.body;
-
-            // Insérer les données de la randonnée dans la base de données des randonnées
             const randoDB = new sqlite3.Database('./database.sqlite');
             randoDB.run(requete, function(err) {
                 if (err) {
