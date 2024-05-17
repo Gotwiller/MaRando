@@ -3,7 +3,7 @@ export async function get(request, response) {
     const db = request.context.database;
     const randonnees = await db.all('SELECT nom, adresse FROM randonnees ORDER BY nom');
 
-    const user = request.session.user;
+    const user = response.locals.user;
 
     const randonneesHtml = randonnees.map(randonnee => `
       <div class="randonnee">
@@ -32,7 +32,6 @@ export async function get(request, response) {
           <nav class="navbar">
             <a href="/">Randonner</a>
             <a href="contribuer.html">Contribuer</a>
-            ${user ? `<span class="user-identifier">${user.username}</span><a id="logout-link" href="/logout">Déconnexion</a>` : `<a href="connexion.html">Connexion</a>`}
           </nav>
         </header>
         <div class="wrapper">
