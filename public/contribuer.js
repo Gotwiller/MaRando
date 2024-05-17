@@ -1,23 +1,26 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('contribution-form');
-  
-    form.addEventListener('submit', async function(event) {
-      event.preventDefault();
-  
-      const formData = new FormData(form);
-  
-      const response = await fetch('/ajouter-randonnee', {
-        method: 'POST',
-        body: formData,
-      });
-  
-      if (response.ok) {
-        const result = await response.json();
-        window.location.href = `/randonnee?nom=${encodeURIComponent(result.nom)}`;
-      } else {
-        const result = await response.json();
-        alert(result.message);
-      }
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('contribution-form');
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const nom = document.getElementById('nom').value;
+
+    const response = await fetch('/ajouter-randonnee', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nom,description, score, adresse, image, newRando: isNewRando}),
     });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      errorMessageDiv.textContent = '';
+      
+      window.location.href = '/';
+    } else {
+      errorMessageDiv.textContent = result.message;
+    }
   });
+});
   

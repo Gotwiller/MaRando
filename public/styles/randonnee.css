@@ -1,6 +1,3 @@
-/* randonnee.css */
-
-/* Styles pour le corps de la page */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -8,7 +5,6 @@ body {
   background-color: #f0f0f0;
 }
 
-/* En-tête de la page */
 .header {
   background-color: #333;
   color: #fff;
@@ -16,13 +12,11 @@ body {
   text-align: center;
 }
 
-/* Logo dans l'en-tête */
 .logo {
   font-size: 24px;
   cursor: pointer;
 }
 
-/* Navigation */
 .navbar {
   display: flex;
   justify-content: center;
@@ -38,31 +32,27 @@ body {
   background-color: #555;
 }
 
-/* Conteneur principal */
 .wrapper {
   max-width: 800px;
-  margin: 100px auto 20px; /* Ajustement de la marge supérieure */
+  margin: 100px auto 20px; 
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: center; /* Centrer le contenu horizontalement */
+  text-align: center;
 }
 
-/* Titre de la randonnée */
 #nom-randonnee {
   font-size: 24px;
   margin-bottom: 10px;
 }
 
-/* Image de la randonnée */
 #photo-randonnee {
   max-width: 100%;
   height: auto;
   margin-bottom: 20px;
 }
 
-/* Description de la randonnée */
 #description-randonnee {
   font-size: 16px;
   margin-bottom: 20px;

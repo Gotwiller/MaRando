@@ -8,7 +8,7 @@ body{
 .header {
     position: sticky;
     top: 0;
-    z-index: 1000; /* Assure que la barre de menu est au-dessus de tout le reste */
+    z-index: 1000; 
 }
 
 .randonnees {
@@ -32,12 +32,10 @@ body{
     border: 1px solid rgba(0, 0, 0, 0.2); 
     padding: 10px 20px;
     margin: 5px;
-    border-radius: 5px; /* Pour arrondir les coins du cadre */
+    border-radius: 5px; 
     background-color: rgba(255, 255, 255, 0.5); 
 }
 
-
-/* Style de la liste des randonnées */
 .wrapper {
     display: flex;
     flex-direction: column;
@@ -45,7 +43,6 @@ body{
     padding: 20px;
   }
   
-  /* Style pour chaque randonnée */
   .randonnee {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
@@ -61,7 +58,6 @@ body{
     transform: scale(1.02);
   }
   
-  /* Style pour le lien vers les détails de la randonnée */
   .randonnee a {
     color: #333;
     text-decoration: none;
@@ -75,7 +71,6 @@ body{
     text-decoration: underline;
   }
   
-  /* Style pour l'adresse de la randonnée */
   .randonnee p {
     color: #666;
     font-size: 1em;
