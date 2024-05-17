@@ -7,16 +7,49 @@
 
 body {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
     min-height: 100vh;
-    background: url('images/bg_contribuer.jpg');
-    background-size: cover;
-    background-position: center;
+    background: url('images/bg_contribuer.jpg') no-repeat center center/cover;
+    color: #333;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.3rem 10%;
+    background: rgba(0, 0, 0, .1);
+    backdrop-filter: blur(50px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    color: #fff;
+}
+
+.logo {
+    font-size: 2rem;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.navbar {
+    display: flex;
+    justify-content: center;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.15rem;
+    font-weight: 500;
+    margin-left: 2.5rem;
 }
 
 .wrapper {
-    width: 600px;
+    max-width: 800px;
     background: transparent;
     border: 2px solid rgba(255,255,255,.2);
     backdrop-filter: blur(20px);
@@ -24,22 +57,44 @@ body {
     color: #fff;
     border-radius: 10px;
     padding: 30px;
-    margin-top: 95px; 
-}
-
-.wrapper h1 {
-    font-size: 36px;
+    margin: 100px auto 20px;
     text-align: center;
 }
 
-.wrapper .input-box {
+#nom-randonnee {
+    font-size: 36px;
+    margin-bottom: 1rem;
+}
+
+#photo-randonnee {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#description-randonnee {
+    font-size: 1.15rem;
+    margin-bottom: 20px;
+    color: #ccc;
+}
+
+#adresse-randonnee,
+#score-randonnee {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #bbb;
+}
+
+.input-box {
     position: relative;
     width: 100%;
     height: 50px;
     margin: 30px 0;
 }
 
-.input-box input, textarea {
+.input-box input, .input-box textarea {
     width: 100%;
     height: 100%;
     background: transparent;
@@ -56,7 +111,7 @@ body {
     resize: none;
 }
 
-.input-box input::placeholder, textarea::placeholder  {
+.input-box input::placeholder, .input-box textarea::placeholder {
     color: #fff;
 }
 
@@ -68,7 +123,7 @@ body {
     font-size: 20px;
 }
 
-.wrapper .btn {
+.btn {
     width: 100%;
     height: 45px;
     background: #fff;

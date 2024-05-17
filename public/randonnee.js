@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 function afficherDetailsRandonnee(randonnee) {
   document.getElementById('nom-randonnee').textContent = randonnee.nom;
-  document.getElementById('photo-randonnee').src = randonnee.photo ; // Placeholder par défaut
+  document.getElementById('photo-randonnee').src = randonnee.photo ; 
   document.getElementById('description-randonnee').textContent = randonnee.description;
   document.getElementById('adresse-randonnee').textContent = randonnee.adresse || 'Adresse non spécifiée';
   document.getElementById('score-randonnee').textContent = `Score: ${randonnee.score}`;

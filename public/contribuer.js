@@ -28,7 +28,6 @@ document.getElementById('contribution-form').addEventListener('submit', async (e
         
         if (response.ok) {
             alert('Randonnée ajoutée avec succès');
-            // Redirection to the new randonnée page
             window.location.href = `/randonnee.html?nom=${encodeURIComponent(result.nom)}`;
         } else {
             alert(result.message || 'Une erreur est survenue');

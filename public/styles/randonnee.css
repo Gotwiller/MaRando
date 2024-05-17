@@ -1,8 +1,15 @@
-body {
-  font-family: "Poppins", "sans-serif";
+* {
   margin: 0;
   padding: 0;
-  background-color: #f0f0f0;
+  box-sizing: border-box;
+  font-family: "Poppins", "sans-serif";
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: url('images/bg_rando.jpg') no-repeat center center/cover;
   color: #333;
 }
 
@@ -18,6 +25,7 @@ body {
   justify-content: space-between;
   align-items: center;
   z-index: 100;
+  color: #fff;
 }
 
 .logo {
@@ -40,26 +48,22 @@ body {
   margin-left: 2.5rem;
 }
 
-.navbar a:hover {
-  background-color: #555;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-}
-
 .wrapper {
   max-width: 800px;
+  background: transparent;
+  border: 2px solid rgba(255,255,255,.2);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 10px rgba(0,0,0,.2);
+  color: #fff;
+  border-radius: 10px;
+  padding: 30px;
   margin: 100px auto 20px;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
 #nom-randonnee {
-  font-size: 2rem;
+  font-size: 36px;
   margin-bottom: 1rem;
-  color: #333;
 }
 
 #photo-randonnee {
@@ -73,12 +77,63 @@ body {
 #description-randonnee {
   font-size: 1.15rem;
   margin-bottom: 20px;
-  color: #666;
+  color: #ccc;
 }
 
 #adresse-randonnee,
 #score-randonnee {
   font-size: 1rem;
   margin-bottom: 10px;
-  color: #888;
+  color: #bbb;
+}
+
+.input-box {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  margin: 30px 0;
+}
+
+.input-box input, .input-box textarea {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  border: 2px solid rgba(255,255,255,.2);
+  border-radius: 40px;
+  font-size: 16px;
+  color: #fff;
+  padding: 20px 45px 20px 20px;
+}
+
+.input-box textarea {
+  resize: none;
+}
+
+.input-box input::placeholder, .input-box textarea::placeholder {
+  color: #fff;
+}
+
+.input-box i {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+}
+
+.btn {
+  width: 100%;
+  height: 45px;
+  background: #fff;
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  box-shadow: 0 0 10px rgba(0,0,0,.1);
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+  margin-top: 20px;
 }
