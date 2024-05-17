@@ -80,21 +80,26 @@ function start(database) {
 
   app.post('/ajouter-randonnee', upload.single('photo'), async (req, res) => {
     try {
-      const db = req.context.database;
-      const { nom, description, score, adresse } = req.body;
-      const photo = req.file ? `/styles/images/${req.file.filename}` : null;
+        const db = req.context.database;
+        const { nom, description, score, adresse } = req.body;
+        const photo = req.file ? `/styles/images/${req.file.filename}` : null;
 
-      if (!nom || !description || !score || !adresse || !photo) {
-        return res.status(400).json({ message: 'Tous les champs doivent être remplis.' });
-      }
+        if (!nom || !description || !score || !adresse || !photo) {
+            res.status(400).json({ message: 'Tous les champs doivent être remplis.' });
+            return;
+        }
 
-      await db.run('INSERT INTO randonnees (nom, description, score, adresse, photo) VALUES (?, ?, ?, ?, ?)', [nom, description, score, adresse, photo]);
-      res.status(200).json({ nom });
+        await db.run(
+            'INSERT INTO randonnees (nom, description, score, adresse, photo) VALUES (?, ?, ?, ?, ?)',
+            [nom, description, score, adresse, photo]
+        );
+
+        res.status(201).json({ nom });
     } catch (error) {
-      console.error(error);
-      res.status(500).send({ message: 'Erreur serveur' });
+        console.error(error);
+        res.status(500).send({ message: 'Erreur serveur' });
     }
-  });
+});
 
   app.use(express.static('public', { extensions: ['html'] }));
 

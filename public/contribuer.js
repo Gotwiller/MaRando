@@ -5,7 +5,7 @@ document.getElementById('contribution-form').addEventListener('submit', async (e
   formData.append('newRando', true);
 
   try {
-      const response = await fetch('/contribuer', {
+      const response = await fetch('/ajouter-randonnee', {
           method: 'POST',
           body: formData,
       });
@@ -13,7 +13,8 @@ document.getElementById('contribution-form').addEventListener('submit', async (e
       const result = await response.json();
       
       if (response.ok) {
-          alert('Randonnée ajoutée avec succès');
+          
+          window.location.href = `/randonnee.html?nom=${encodeURIComponent(result.nom)}`;
       } else {
           alert(result.message || 'Une erreur est survenue');
       }
