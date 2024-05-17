@@ -13,13 +13,13 @@ export async function post(request, response) {
       } else {
         const hashedPassword = bcrypt.hashSync(password, 10);
         await db.run('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword]);
-        request.session.user = { username }; // Stocker l'utilisateur dans la session
+        request.session.user = { username };
         return response.status(201).json({ message: 'Inscription réussie' });
       }
     } else {
       if (user) {
         if (bcrypt.compareSync(password, user.password)) {
-          request.session.user = { username }; // Stocker l'utilisateur dans la session
+          request.session.user = { username }; 
           return response.status(200).json({ message: 'Connexion réussie' });
         } else {
           return response.status(401).json({ message: 'Mot de passe incorrect' });

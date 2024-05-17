@@ -15,7 +15,6 @@ dotenv.config();
 const port = process.env.PORT || 8080;
 const databaseFile = process.env.DATABASE_FILE || 'database.sqlite';
 
-// Configuration de multer pour le téléchargement des fichiers
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'public/styles/images/');
@@ -29,11 +28,9 @@ const upload = multer({ storage });
 function start(database) {
   const app = express();
 
-  // Middleware to parse JSON and urlencoded data
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
-  // Configurer les sessions
   app.use(session({
     secret: 'ton-code',
     resave: false,
@@ -50,7 +47,6 @@ function start(database) {
     console.log(`Server listening at http://localhost:${port}`);
   });
 
-  // Routes
   app.get('/', indexRoute.get);
   app.post('/connexion', connexionRoute.post);
   app.post('/contribuer', upload.single('photo'), contribuerRoute.post);

@@ -7,16 +7,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       const response = await fetch(`/randonnee?nom=${encodeURIComponent(nom)}`);
       
-      // Ajout de vérification de l'état de la réponse
       if (!response.ok) {
         throw new Error(`Erreur HTTP: ${response.status}`);
       }
       
-      // Afficher la réponse brute pour le débogage
       const responseText = await response.text();
       console.log('Texte brut de la réponse:', responseText);
 
-      // Puis parser la réponse en JSON
       const randonnee = JSON.parse(responseText);
       console.log('Détails de la randonnée récupérés:', randonnee);
 
