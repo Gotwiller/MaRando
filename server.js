@@ -1,13 +1,14 @@
 import express from 'express';
 import session from 'express-session';
-import * as indexRoute from './routes/index.js';
 import { open } from 'sqlite';
 import sqlite3 from 'sqlite3';
-import * as connexionRoute from './routes/connexion.js';
-import * as contribuerRoute from './routes/contribuer.js';
 import multer from 'multer';
 import path from 'path';
 import dotenv from 'dotenv';
+
+import * as indexRoute from './routes/index.js';
+import * as connexionRoute from './routes/connexion.js';
+import * as contribuerRoute from './routes/contribuer.js';
 
 dotenv.config();
 
@@ -20,7 +21,7 @@ const storage = multer.diskStorage({
     cb(null, 'public/styles/images/');
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // Renommer le fichier avec la date actuelle
+    cb(null, Date.now() + path.extname(file.originalname));
   },
 });
 const upload = multer({ storage });
@@ -33,18 +34,15 @@ function start(database) {
   app.use(express.urlencoded({ extended: true }));
 
   // Configurer les sessions
-  app.use(
-    session({
-      secret:'ton-code', // Utilisez une clé secrète réelle stockée dans les variables d'environnement
-      resave: false,
-      saveUninitialized: false,
-      cookie: { secure: false }, // Pour HTTPS, mettez `secure: true` en production
-    })
-  );
+  app.use(session({
+    secret: 'ton-code',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false },
+  }));
 
   app.use((req, res, next) => {
-    req.context = req.context || {};
-    req.context.database = database;
+    req.context = { database };
     next();
   });
 
@@ -55,7 +53,7 @@ function start(database) {
   // Routes
   app.get('/', indexRoute.get);
   app.post('/connexion', connexionRoute.post);
-  app.post('/contribuer', contribuerRoute.post);
+  app.post('/contribuer', upload.single('photo'), contribuerRoute.post);
 
   app.get('/randonnees', async (req, res) => {
     try {
@@ -63,6 +61,7 @@ function start(database) {
       const randonnees = await db.all('SELECT nom, adresse FROM randonnees ORDER BY nom');
       res.json(randonnees);
     } catch (error) {
+      console.error(error);
       res.status(500).send({ message: 'Erreur serveur' });
     }
   });
@@ -78,6 +77,7 @@ function start(database) {
         res.status(404).send({ message: 'Randonnée non trouvée' });
       }
     } catch (error) {
+      console.error(error);
       res.status(500).send({ message: 'Erreur serveur' });
     }
   });
@@ -86,28 +86,18 @@ function start(database) {
     try {
       const db = req.context.database;
       const { nom, description, score, adresse } = req.body;
-      const photo = req.file ? `/images/${req.file.filename}` : null;
+      const photo = req.file ? `/styles/images/${req.file.filename}` : null;
 
       if (!nom || !description || !score || !adresse || !photo) {
-        res.status(400).json({ message: 'Tous les champs doivent être remplis.' });
-        return;
+        return res.status(400).json({ message: 'Tous les champs doivent être remplis.' });
       }
 
-      await db.run(
-        'INSERT INTO randonnees (nom, description, score, adresse, photo) VALUES (?, ?, ?, ?, ?)',
-        [nom, description, score, adresse, photo]
-      );
-
+      await db.run('INSERT INTO randonnees (nom, description, score, adresse, photo) VALUES (?, ?, ?, ?, ?)', [nom, description, score, adresse, photo]);
       res.status(200).json({ nom });
     } catch (error) {
       console.error(error);
       res.status(500).send({ message: 'Erreur serveur' });
     }
-  });
-
-  app.use((req, res, next) => {
-    console.log(`${req.method} ${req.url}`);
-    next();
   });
 
   app.use(express.static('public', { extensions: ['html'] }));

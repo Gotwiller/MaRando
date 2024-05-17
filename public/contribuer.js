@@ -1,26 +1,24 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('contribution-form');
+document.getElementById('contribution-form').addEventListener('submit', async (event) => {
+  event.preventDefault();
 
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault();
+  const formData = new FormData(event.target);
+  formData.append('newRando', true);
 
-    const nom = document.getElementById('nom').value;
+  try {
+      const response = await fetch('/contribuer', {
+          method: 'POST',
+          body: formData,
+      });
 
-    const response = await fetch('/ajouter-randonnee', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nom,description, score, adresse, image, newRando: isNewRando}),
-    });
-
-    const result = await response.json();
-
-    if (response.ok) {
-      errorMessageDiv.textContent = '';
+      const result = await response.json();
       
-      window.location.href = '/';
-    } else {
-      errorMessageDiv.textContent = result.message;
-    }
-  });
+      if (response.ok) {
+          alert('Randonnée ajoutée avec succès');
+      } else {
+          alert(result.message || 'Une erreur est survenue');
+      }
+  } catch (error) {
+      console.error('Erreur:', error);
+      alert('Une erreur est survenue');
+  }
 });
-  
