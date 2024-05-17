@@ -7,14 +7,17 @@ import * as connexionRoute from './routes/connexion.js';
 import * as contribuerRoute from './routes/contribuer.js';
 import multer from 'multer';
 import path from 'path';
+import dotenv from 'dotenv';
 
-const port = 8080;
-const databaseFile = 'database.sqlite';
+dotenv.config();
+
+const port = process.env.PORT || 8080;
+const databaseFile = process.env.DATABASE_FILE || 'database.sqlite';
 
 // Configuration de multer pour le téléchargement des fichiers
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'public/images/');
+    cb(null, 'public/styles/images/');
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname)); // Renommer le fichier avec la date actuelle
@@ -25,19 +28,23 @@ const upload = multer({ storage });
 function start(database) {
   const app = express();
 
+  // Middleware to parse JSON and urlencoded data
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+
   // Configurer les sessions
   app.use(
     session({
-      secret: 'your-secret-key', // Changez cette clé par une clé secrète réelle
+      secret:'ton-code', // Utilisez une clé secrète réelle stockée dans les variables d'environnement
       resave: false,
       saveUninitialized: false,
-      cookie: { secure: false }, // Pour HTTPS, mettez `secure: true`
+      cookie: { secure: false }, // Pour HTTPS, mettez `secure: true` en production
     })
   );
 
-  app.use((request, response, next) => {
-    request.context = request.context ?? {};
-    request.context.database = database;
+  app.use((req, res, next) => {
+    req.context = req.context || {};
+    req.context.database = database;
     next();
   });
 
@@ -45,10 +52,11 @@ function start(database) {
     console.log(`Server listening at http://localhost:${port}`);
   });
 
-  // Route pour afficher la page d'accueil
+  // Routes
   app.get('/', indexRoute.get);
+  app.post('/connexion', connexionRoute.post);
+  app.post('/contribuer', contribuerRoute.post);
 
-  // Route pour obtenir la liste des randonnées
   app.get('/randonnees', async (req, res) => {
     try {
       const db = req.context.database;
@@ -56,27 +64,6 @@ function start(database) {
       res.json(randonnees);
     } catch (error) {
       res.status(500).send({ message: 'Erreur serveur' });
-    }
-  });
-
-  app.use((request, response, next) => {
-    console.log(`${request.method} ${request.url}`);
-    next();
-  });
-
-  app.use(express.static('public', { extensions: ['html'] }));
-
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
-
-  app.post('/connexion', connexionRoute.post);
-
-  // Route pour obtenir l'utilisateur connecté
-  app.get('/get-user', (request, response) => {
-    if (request.session.user) {
-      response.json({ username: request.session.user.username });
-    } else {
-      response.json({});
     }
   });
 
@@ -95,7 +82,6 @@ function start(database) {
     }
   });
 
-  // Route pour ajouter une nouvelle randonnée
   app.post('/ajouter-randonnee', upload.single('photo'), async (req, res) => {
     try {
       const db = req.context.database;
@@ -116,6 +102,21 @@ function start(database) {
     } catch (error) {
       console.error(error);
       res.status(500).send({ message: 'Erreur serveur' });
+    }
+  });
+
+  app.use((req, res, next) => {
+    console.log(`${req.method} ${req.url}`);
+    next();
+  });
+
+  app.use(express.static('public', { extensions: ['html'] }));
+
+  app.get('/get-user', (req, res) => {
+    if (req.session.user) {
+      res.json({ username: req.session.user.username });
+    } else {
+      res.json({});
     }
   });
 }

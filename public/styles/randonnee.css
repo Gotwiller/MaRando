@@ -1,20 +1,30 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Poppins", "sans-serif";
   margin: 0;
   padding: 0;
   background-color: #f0f0f0;
+  color: #333;
 }
 
 .header {
-  background-color: #333;
-  color: #fff;
-  padding: 10px;
-  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.3rem 10%;
+  background: rgba(0, 0, 0, .1);
+  backdrop-filter: blur(50px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
 }
 
 .logo {
-  font-size: 24px;
-  cursor: pointer;
+  font-size: 2rem;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
 }
 
 .navbar {
@@ -25,16 +35,20 @@ body {
 .navbar a {
   color: #fff;
   text-decoration: none;
-  padding: 10px;
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin-left: 2.5rem;
 }
 
 .navbar a:hover {
   background-color: #555;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
 }
 
 .wrapper {
   max-width: 800px;
-  margin: 100px auto 20px; 
+  margin: 100px auto 20px;
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;
@@ -43,17 +57,28 @@ body {
 }
 
 #nom-randonnee {
-  font-size: 24px;
-  margin-bottom: 10px;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #333;
 }
 
 #photo-randonnee {
   max-width: 100%;
   height: auto;
   margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #description-randonnee {
-  font-size: 16px;
+  font-size: 1.15rem;
   margin-bottom: 20px;
+  color: #666;
+}
+
+#adresse-randonnee,
+#score-randonnee {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #888;
 }
